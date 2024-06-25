@@ -9,20 +9,27 @@ public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
+    @Column(unique = true)
     private String titulo;
-    private String autor;
+
+    @ManyToOne()
+    private Autor autor;
+
+    private String nombreAutor;
     private String idiomas;
-    private Integer numeroDescargas;
+    private Double numeroDescargas;
 
+    public Libro() {} //Constructor predeterminado
 
-    //Terminar con toString
     public Libro(DatosLibro datosLibro) {
         this.titulo = datosLibro.titulo();
-        this.autor = datosLibro.autor();
-        this.idiomas = datosLibro.idioma();
+        this.nombreAutor = obtenerAutor(datosLibro).getNombre();
+        this.idiomas = datosIdioma(datosLibro);
         this.numeroDescargas = datosLibro.numeroDescargas();
     }
 
+    //Getters & Setters
     public Long getId() {
         return Id;
     }
@@ -39,12 +46,12 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public String getAutor() {
-        return autor;
+    public String getNombreAutor() {
+        return nombreAutor;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
+    public void setNombreAutor(String nombreAutor) {
+        this.nombreAutor = nombreAutor;
     }
 
     public String getIdiomas() {
@@ -55,11 +62,39 @@ public class Libro {
         this.idiomas = idiomas;
     }
 
-    public Integer getNumeroDescargas() {
+    public Double getNumeroDescargas() {
         return numeroDescargas;
     }
 
-    public void setNumeroDescargas(Integer numeroDescargas) {
+    public void setNumeroDescargas(Double numeroDescargas) {
         this.numeroDescargas = numeroDescargas;
     }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+    public Autor obtenerAutor(DatosLibro datosLibro) {
+        DatosAutor datosAutor = datosLibro.autor().getFirst();
+        return new Autor(datosAutor);
+    }
+
+    public String obtenerIdioma(DatosLibro datosLibro) {
+        String idioma = datosLibro.idioma().toString();
+        return idioma;
+    }
+
+    @Override
+    public String toString() {
+        return "Titulo: " + titulo + "\'"
+                + ", Autor:" + nombreAutor +
+                ", Idiomas:" + idiomas+
+                " , Numero de descargas: " + numeroDescargas;
+    }
+
+
 }
