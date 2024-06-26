@@ -71,7 +71,7 @@ public class Autor {
     }
 
     public Autor obtenerAutor(DatosLibro datosLibro) {
-        DatosAutor datosAutor = datosLibro.autor().getFirst();
+        DatosAutor datosAutor = datosLibro.autor().get(0);
         return new Autor(datosAutor);
     }
 

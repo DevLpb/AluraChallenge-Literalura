@@ -25,7 +25,7 @@ public class Libro {
     public Libro(DatosLibro datosLibro) {
         this.titulo = datosLibro.titulo();
         this.nombreAutor = obtenerAutor(datosLibro).getNombre();
-        this.idiomas = datosIdioma(datosLibro);
+        this.idiomas = obtenerIdioma(datosLibro);
         this.numeroDescargas = datosLibro.numeroDescargas();
     }
 
@@ -79,7 +79,7 @@ public class Libro {
     }
 
     public Autor obtenerAutor(DatosLibro datosLibro) {
-        DatosAutor datosAutor = datosLibro.autor().getFirst();
+        DatosAutor datosAutor = datosLibro.autor().get(0);
         return new Autor(datosAutor);
     }
 
